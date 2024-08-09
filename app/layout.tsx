@@ -5,12 +5,13 @@ import Nav from "@/components/layout/nav";
 import Footer from "@/components/layout/footer";
 import { Suspense } from "react";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export const metadata = {
   title: "Precedent - Building blocks for your Next.js project",
   description:
     "Precedent is the all-in-one solution for your Next.js project. It includes a design system, authentication, analytics, and more.",
-  metadataBase: new URL("https://precedent.dev"),
+  metadataBase: new URL("https://precedent-coral-eight.vercel.app"),
 };
 
 export default async function RootLayout({
@@ -29,6 +30,7 @@ export default async function RootLayout({
           {children}
         </main>
         <Footer />
+        <SpeedInsights/>
         <VercelAnalytics />
       </body>
     </html>

@@ -11,6 +11,44 @@ datasource db {
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
+model Collection {
+  id        Int              @id @default(autoincrement())
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  name      String           @db.VarChar(255)
+  slug      String           @unique
+  types     CollectionType[]
+  parentId  Int?
+  parent    Collection?      @relation(name: "ParentChild", fields: [parentId], references: [id])
+  children  Collection[]     @relation(name: "ParentChild")
+  products  Product[]
+}
+
+model Product {
+  id           Int              @id @default(autoincrement())
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+  name         String           @db.VarChar(255)
+  description  String
+  price        Float
+  rate         Float
+  published    Boolean          @default(false)
+  images       ProductImage[]
+  colors       ProductColor[]
+  sizes        ProductSize[]
+  types        CollectionType[]
+  collection   Collection       @relation(fields: [collectionId], references: [id])
+  collectionId Int
+}
+
+model ProductImage {
+  id        Int      @id @default(autoincrement())
+  imageURL  String
+  imageBlur String
+  Product   Product? @relation(fields: [productId], references: [id])
+  productId Int?
+}
+
 
 model Account {
   id                 String  @id @default(cuid())
@@ -57,4 +95,32 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+
+enum CollectionType {
+  MEN
+  WOMEN
+}
+
+enum ProductSize {
+  S
+  M
+  L
+  XL
+  XXL
+  XXXL
+}
+
+enum ProductColor {
+  BLACK
+  WHITE
+  GRAY
+  RED
+  ORANGE
+  YELLOW
+  GREEN
+  PINK
+  BLUE
+  PURPLE
 }

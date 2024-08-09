@@ -33,6 +33,21 @@ export default function NavBar({ session }: { session: Session | null }) {
             <p>Precedent</p>
           </Link>
           <div>
+          <Link href="/" className="flex items-center font-display text-2xl">
+            <p>Service</p>
+          </Link>
+          </div>
+          <div>
+          <Link href="/" className="flex items-center font-display text-2xl">
+            <p>Abouts</p>
+          </Link>
+          </div>
+          <div>
+          <Link href="/" className="flex items-center font-display text-2xl">
+            <p>Contact</p>
+          </Link>
+          </div>
+          <div>
             {session ? (
               <UserDropdown session={session} />
             ) : (
